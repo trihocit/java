@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="_layout"   xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<div layout:fragment="content" class="row" style="margin-left: 5px;
+                                                  margin-top: 20px;">
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>LectureName</th>
+            <th>Date</th>
+            <th>Place</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="course : ${course}">
+            <td th:text="${course.id}"></td>
+            <td th:text="${course.lectureName}"></td>
+            <td th:text="${course.startDate}"></td>
+            <td th:text="${course.place}"></td>
+            <td>
+                <a th:href="@{/course/edit/{id}(id=${course.id})}" class="btn
+                 btn-success btn-sm">Edit</a>
+                <a th:href="@{/course/delete/{id}(id=${course.id})}" class="btn
+                btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
+<script>
+    function searchProducts() {
+        var searchInput = document.getElementById("searchInput");
+        var searchTerm = searchInput.value.toLowerCase();
+        var productRows = document.getElementsByTagName("tr");
+
+        for (var i = 1; i < productRows.length; i++) {
+            var nameCell = productRows[i].getElementsByTagName("td")[1];
+            var productName = nameCell.textContent.toLowerCase();
+             var otherCell = productRows[i].getElementsByTagName("td")[3];
+             var otherValue = otherCell.textContent.toLowerCase();
+
+            if (productName.includes(searchTerm)||otherValue.includes(searchTerm)) {
+                productRows[i].style.display = "";
+            } else {
+                productRows[i].style.display = "none";
+            }
+        }
+    }
+</script>
